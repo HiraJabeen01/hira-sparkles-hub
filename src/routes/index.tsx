@@ -17,6 +17,8 @@ import hiraAsset from "@/assets/hira.png.asset.json";
 import firstFrameAsset from "@/assets/firstframe-architecture.png.asset.json";
 import microtechxCover from "@/assets/microtechx-site.png.asset.json";
 import votingArchitectureAsset from "@/assets/voting-architecture.png.asset.json";
+import cicdAsset from "@/assets/cicd-pipeline.jpg.asset.json";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -134,24 +136,20 @@ const projects: Project[] = [
     tag: "DevOps Automation",
     name: "CI/CD & Infrastructure Automation",
     title: "Pipeline Toolkit",
-    desc: "Built a fully automated CI/CD workflow using cloud-native technologies to ship reliably, multiple times a day.",
+    desc: "Built a fully automated CI/CD workflow using cloud-native technologies to ship reliably, multiple times a day. Integrated GitHub Actions, Terraform, Docker, and Azure to provision infrastructure, run tests, build container images, and deploy to multiple environments with zero manual steps.",
     stack: "GitHub Actions · Terraform · Azure · Docker",
+    highlights: ["Automated Pipelines", "Infrastructure as Code", "Zero-Downtime Deploys", "Multi-Environment"],
+    image: cicdAsset.url,
   },
 ];
 
 function Portfolio() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set());
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const toggleProjectDesc = (name: string) => {
-    setExpandedProjects((prev) => {
-      const next = new Set(prev);
-      if (next.has(name)) next.delete(name);
-      else next.add(name);
-      return next;
-    });
-  };
+  const featuredProject = projects.find((p) => p.featured);
+  const otherProjects = projects.filter((p) => !p.featured);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -406,77 +404,137 @@ function Portfolio() {
               Engineering solutions that create measurable business impact.
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {projects.map((p, i) => {
-              const isFeatured = !!p.featured;
-              return (
-                <article
-                  key={p.name}
-                  className={`group relative border border-border rounded-3xl overflow-hidden transition hover:-translate-y-1 ${
-                    isFeatured ? "bg-primary md:col-span-2 md:grid md:grid-cols-2" : "bg-surface flex flex-col"
-                  }`}
-                >
-                  {p.image && (
-                    <div
-                      className={`relative w-full overflow-hidden bg-white ${
-                        isFeatured ? "md:order-2 md:border-l border-ink/10 aspect-[4/3] md:aspect-auto md:h-full" : "aspect-[4/3] border-b border-ink/10"
-                      }`}
-                    >
+          {/* Featured project — full width */}
+          {featuredProject && (
+            <button
+              type="button"
+              onClick={() => setSelectedProject(featuredProject)}
+              className="group relative w-full text-left bg-primary border border-border rounded-3xl overflow-hidden transition hover:-translate-y-1 md:grid md:grid-cols-2 mb-6 cursor-pointer"
+            >
+              {featuredProject.image && (
+                <div className="relative w-full overflow-hidden bg-[#0b0a2a] md:order-2 md:border-l border-ink/10 aspect-[4/3] md:aspect-auto md:h-full">
+                  <img
+                    src={featuredProject.image}
+                    alt={`${featuredProject.name} — ${featuredProject.title}`}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-[1.02] transition-transform duration-500"
+                  />
+                </div>
+              )}
+              <div className="p-8 md:p-10 flex flex-col md:order-1">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.18em] opacity-70 mb-3">
+                      {featuredProject.tag}
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-ink">{featuredProject.name}</h3>
+                    <p className="text-ink/70 mt-1 font-medium text-sm">{featuredProject.title}</p>
+                  </div>
+                  <span className="text-ink/40 font-mono text-sm">01</span>
+                </div>
+                <p className="mt-6 text-ink/80 leading-relaxed text-sm md:text-base line-clamp-3">
+                  {featuredProject.desc}
+                </p>
+                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-ink underline underline-offset-4">
+                  View details <ArrowUpRight className="w-4 h-4" />
+                </span>
+              </div>
+            </button>
+          )}
+
+          {/* Other projects — 3 in a row */}
+          <div className="grid md:grid-cols-3 gap-6">
+            {otherProjects.map((p, i) => (
+              <button
+                type="button"
+                key={p.name}
+                onClick={() => setSelectedProject(p)}
+                className="group relative text-left bg-surface border border-border rounded-3xl overflow-hidden transition hover:-translate-y-1 flex flex-col cursor-pointer"
+              >
+                {p.image && (
+                  <div className="relative w-full overflow-hidden bg-white aspect-[4/3] border-b border-ink/10">
+                    <img
+                      src={p.image}
+                      alt={`${p.name} — ${p.title}`}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-[1.02] transition-transform duration-500"
+                    />
+                  </div>
+                )}
+                <div className="p-6 md:p-7 flex flex-col flex-1">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="text-xs uppercase tracking-[0.18em] opacity-70 mb-2">{p.tag}</div>
+                      <h3 className="text-xl md:text-2xl font-bold text-ink leading-tight">{p.name}</h3>
+                      <p className="text-ink/70 mt-1 font-medium text-xs">{p.title}</p>
+                    </div>
+                    <span className="text-ink/40 font-mono text-xs">0{i + 2}</span>
+                  </div>
+                  <p className="mt-4 text-ink/80 leading-relaxed text-sm line-clamp-3">{p.desc}</p>
+                  <span className="mt-auto pt-4 inline-flex items-center gap-1.5 text-sm font-medium text-ink underline underline-offset-4">
+                    View details <ArrowUpRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Project details modal */}
+          <Dialog open={!!selectedProject} onOpenChange={(o) => !o && setSelectedProject(null)}>
+            <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-background">
+              {selectedProject && (
+                <>
+                  <DialogHeader>
+                    <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">
+                      {selectedProject.tag}
+                    </div>
+                    <DialogTitle className="text-2xl md:text-3xl font-bold text-ink">
+                      {selectedProject.name}
+                    </DialogTitle>
+                    <DialogDescription className="text-ink/70 font-medium">
+                      {selectedProject.title}
+                    </DialogDescription>
+                  </DialogHeader>
+                  {selectedProject.image && (
+                    <div className="relative w-full overflow-hidden rounded-xl bg-[#0b0a2a] border border-border aspect-[16/10]">
                       <img
-                        src={p.image}
-                        alt={`${p.name} — ${p.title}`}
-                        loading="lazy"
-                        className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-[1.02] transition-transform duration-500"
+                        src={selectedProject.image}
+                        alt={`${selectedProject.name} — ${selectedProject.title}`}
+                        className="absolute inset-0 w-full h-full object-contain p-3"
                       />
                     </div>
                   )}
-                  <div className={`p-8 md:p-10 flex flex-col ${isFeatured ? "md:order-1" : "flex-1"}`}>
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="text-xs uppercase tracking-[0.18em] opacity-70 mb-3">
-                          {p.tag}
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-ink">{p.name}</h3>
-                        <p className="text-ink/70 mt-1 font-medium text-sm">{p.title}</p>
-                      </div>
-                      <span className="text-ink/40 font-mono text-sm">0{i + 1}</span>
-                    </div>
-                    <div className="mt-6 text-ink/80 leading-relaxed text-sm md:text-base">
-                      <p>
-                        {p.desc.length > 160 && !expandedProjects.has(p.name)
-                          ? `${p.desc.slice(0, 160).trim()}...`
-                          : p.desc}
-                      </p>
-                      {p.desc.length > 160 && (
-                        <button
-                          onClick={() => toggleProjectDesc(p.name)}
-                          className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-ink underline underline-offset-4 hover:text-ink/70 transition"
-                        >
-                          {expandedProjects.has(p.name) ? "See less" : "See more"}
-                        </button>
-                      )}
-                    </div>
-                    {p.highlights && (
-                      <div className="mt-6 flex flex-wrap gap-2">
-                        {p.highlights.map((h) => (
+                  <p className="text-ink/80 leading-relaxed text-sm md:text-base">
+                    {selectedProject.desc}
+                  </p>
+                  {selectedProject.highlights && (
+                    <div>
+                      <h4 className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">
+                        Highlights
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedProject.highlights.map((h) => (
                           <span
                             key={h}
-                            className={`text-xs font-medium px-3 py-1.5 rounded-full border ${
-                              isFeatured
-                                ? "bg-ink text-background border-ink"
-                                : "bg-background text-ink border-border"
-                            }`}
+                            className="text-xs font-medium px-3 py-1.5 rounded-full border bg-background text-ink border-border"
                           >
                             {h}
                           </span>
                         ))}
                       </div>
-                    )}
+                    </div>
+                  )}
+                  <div>
+                    <h4 className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">
+                      Tech Stack
+                    </h4>
+                    <p className="text-sm text-ink/80 font-mono">{selectedProject.stack}</p>
                   </div>
-                </article>
-              );
-            })}
-          </div>
+                </>
+              )}
+            </DialogContent>
+          </Dialog>
+
 
         </div>
       </section>
