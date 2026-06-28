@@ -17,7 +17,7 @@ import hiraAsset from "@/assets/hira.png.asset.json";
 import firstFrameAsset from "@/assets/firstframe-architecture.png.asset.json";
 import microtechxCover from "@/assets/microtechx-site.png.asset.json";
 import votingArchitectureAsset from "@/assets/voting-architecture.png.asset.json";
-import cicdAsset from "@/assets/cicd-pipeline.jpg.asset.json";
+import devopsAsset from "@/assets/firstframe-devops.png.asset.json";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/")({
@@ -134,12 +134,18 @@ const projects: Project[] = [
   },
   {
     tag: "DevOps Automation",
-    name: "CI/CD & Infrastructure Automation",
-    title: "Pipeline Toolkit",
-    desc: "Built a fully automated CI/CD workflow using cloud-native technologies to ship reliably, multiple times a day. Integrated GitHub Actions, Terraform, Docker, and Azure to provision infrastructure, run tests, build container images, and deploy to multiple environments with zero manual steps.",
-    stack: "GitHub Actions · Terraform · Azure · Docker",
-    highlights: ["Automated Pipelines", "Infrastructure as Code", "Zero-Downtime Deploys", "Multi-Environment"],
-    image: cicdAsset.url,
+    name: "FirstFrame DevOps",
+    title: "CI/CD Pipeline & Infrastructure Automation",
+    desc: "Implemented end-to-end DevOps for a SaaS platform using GitHub Actions, Azure Container Registry and Azure Container Apps across Dev, Test and Prod environments. The pipeline covers build, test, Docker image creation, push to ACR, and automated deployment with monitoring via Azure Monitor and Log Analytics.",
+    stack: "GitHub Actions · Azure Container Registry · Azure Container Apps · Docker · Azure Monitor · Log Analytics",
+    highlights: [
+      "Automated CI/CD with GitHub Actions",
+      "Azure Container Registry & Apps",
+      "Dev / Test / Prod environments",
+      "Azure Monitor & Log Analytics",
+      "100% automated deployments",
+    ],
+    image: devopsAsset.url,
   },
 ];
 
