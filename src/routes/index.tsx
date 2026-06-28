@@ -411,7 +411,7 @@ function Portfolio() {
                 {p.image && (
                   <div
                     className={`relative w-full overflow-hidden border-b border-ink/10 ${
-                      p.featured ? "bg-[#0b0a2a]" : "bg-ink/5"
+                      p.featured ? "bg-[#0b0a2a]" : "bg-white"
                     }`}
                   >
                     <img
@@ -421,7 +421,7 @@ function Portfolio() {
                       className={`w-full ${
                         p.featured
                           ? "max-h-[520px] object-contain mx-auto"
-                          : "aspect-[16/9] object-cover"
+                          : "aspect-[16/9] object-contain"
                       } group-hover:scale-[1.02] transition-transform duration-500`}
                     />
                   </div>
