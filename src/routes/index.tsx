@@ -17,6 +17,8 @@ import hiraAsset from "@/assets/hira.png.asset.json";
 import firstFrameAsset from "@/assets/firstframe-architecture.png.asset.json";
 import microtechxCover from "@/assets/microtechx-site.png.asset.json";
 import votingArchitectureAsset from "@/assets/voting-architecture.png.asset.json";
+import cicdAsset from "@/assets/cicd-pipeline.jpg.asset.json";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
