@@ -396,32 +396,69 @@ function Portfolio() {
             {projects.map((p, i) => (
               <article
                 key={p.name}
-                className={`group relative border border-border rounded-3xl p-8 md:p-10 transition hover:-translate-y-1 ${
+                className={`group relative border border-border rounded-3xl overflow-hidden transition hover:-translate-y-1 ${
                   p.featured ? "bg-primary md:col-span-2" : "bg-surface"
                 }`}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="text-xs uppercase tracking-[0.18em] opacity-70 mb-3">
-                      {p.tag}
-                    </div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-ink">{p.name}</h3>
-                    <p className="text-ink/70 mt-1 font-medium">{p.title}</p>
+                {p.image && (
+                  <div
+                    className={`relative w-full overflow-hidden border-b border-ink/10 ${
+                      p.featured ? "bg-[#0b0a2a]" : "bg-ink/5"
+                    }`}
+                  >
+                    <img
+                      src={p.image}
+                      alt={`${p.name} — ${p.title}`}
+                      loading="lazy"
+                      className={`w-full ${
+                        p.featured
+                          ? "max-h-[520px] object-contain mx-auto"
+                          : "aspect-[16/9] object-cover"
+                      } group-hover:scale-[1.02] transition-transform duration-500`}
+                    />
                   </div>
-                  <span className="text-ink/40 font-mono text-sm">0{i + 1}</span>
-                </div>
-                <p className="mt-6 text-ink/80 max-w-2xl leading-relaxed">{p.desc}</p>
-                <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-                  <span className="text-sm font-mono text-ink/70">{p.stack}</span>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink group-hover:gap-3 transition-all">
-                    View case study <ArrowUpRight className="w-4 h-4" />
-                  </span>
+                )}
+                <div className="p-8 md:p-10">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="text-xs uppercase tracking-[0.18em] opacity-70 mb-3">
+                        {p.tag}
+                      </div>
+                      <h3 className="text-3xl md:text-4xl font-bold text-ink">{p.name}</h3>
+                      <p className="text-ink/70 mt-1 font-medium">{p.title}</p>
+                    </div>
+                    <span className="text-ink/40 font-mono text-sm">0{i + 1}</span>
+                  </div>
+                  <p className="mt-6 text-ink/80 max-w-2xl leading-relaxed">{p.desc}</p>
+                  {p.highlights && (
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {p.highlights.map((h) => (
+                        <span
+                          key={h}
+                          className={`text-xs font-medium px-3 py-1.5 rounded-full border ${
+                            p.featured
+                              ? "bg-ink text-background border-ink"
+                              : "bg-background text-ink border-border"
+                          }`}
+                        >
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+                    <span className="text-sm font-mono text-ink/70">{p.stack}</span>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink group-hover:gap-3 transition-all">
+                      View case study <ArrowUpRight className="w-4 h-4" />
+                    </span>
+                  </div>
                 </div>
               </article>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* CONTACT */}
       <section id="contact" className="py-24 md:py-32 bg-ink text-background">
