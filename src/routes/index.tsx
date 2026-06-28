@@ -14,6 +14,8 @@ import {
   X,
 } from "lucide-react";
 import hiraAsset from "@/assets/hira.png.asset.json";
+import firstFrameAsset from "@/assets/firstframe-architecture.png.asset.json";
+import microtechxCover from "@/assets/microtechx-cover.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -72,21 +74,46 @@ const services = [
   },
 ];
 
-const projects = [
+type Project = {
+  tag: string;
+  name: string;
+  title: string;
+  desc: string;
+  stack: string;
+  highlights?: string[];
+  image?: string;
+  featured?: boolean;
+};
+
+const projects: Project[] = [
   {
     tag: "Featured Project",
     name: "FirstFrame",
     title: "Enterprise SaaS Platform",
-    desc: "Delivered a cloud-native SaaS platform from concept to production — streamlining collaboration, automating workflows, and scaling without operational overhead.",
+    desc: "Delivered a cloud-native SaaS platform from concept to production — enabling organizations to streamline collaboration, automate workflows, and scale without increasing operational overhead. FirstFrame unifies Outlook calendar, a video library, and an Outlook add-in into an intelligent campaign engine, then delivers content through a custom Microsoft Teams bot for HR interviews, sales calls, and training sessions.",
     stack: "Azure · Docker · Kubernetes · Terraform · GitHub Actions",
+    highlights: [
+      "Production-ready MVP",
+      "Microsoft 365 Integration",
+      "Automated Deployment",
+      "Cloud Scalability",
+    ],
+    image: firstFrameAsset.url,
     featured: true,
   },
   {
     tag: "Corporate Digital Platform",
     name: "Microtechx",
-    title: "Enterprise Website",
-    desc: "Designed and developed a modern digital platform for enterprise services with a focus on performance and brand clarity.",
-    stack: "Next.js · Azure · GitHub Actions",
+    title: "Enterprise Business Website",
+    desc: "Designed and developed the official website for MicroTechx, an enterprise technology company specializing in Cloud, AI, Security, and SAP BTP solutions. Built a responsive, user-centric platform showcasing services, industries, case studies, and business outcomes — with modern UI/UX, intuitive navigation, mobile optimization, and strategic CTAs that drive client engagement.",
+    stack: "Next.js · TypeScript · Azure DevOps · Responsive Design",
+    highlights: [
+      "Responsive UI/UX",
+      "Next.js + TypeScript",
+      "Azure DevOps Pipelines",
+      "SEO & Performance",
+    ],
+    image: microtechxCover,
   },
   {
     tag: "Cloud Architecture Lab",
