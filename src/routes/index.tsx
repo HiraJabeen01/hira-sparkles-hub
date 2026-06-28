@@ -14,6 +14,8 @@ import {
   X,
 } from "lucide-react";
 import hiraAsset from "@/assets/hira.png.asset.json";
+import firstFrameAsset from "@/assets/firstframe-architecture.png.asset.json";
+import microtechxCover from "@/assets/microtechx-cover.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -72,21 +74,46 @@ const services = [
   },
 ];
 
-const projects = [
+type Project = {
+  tag: string;
+  name: string;
+  title: string;
+  desc: string;
+  stack: string;
+  highlights?: string[];
+  image?: string;
+  featured?: boolean;
+};
+
+const projects: Project[] = [
   {
     tag: "Featured Project",
     name: "FirstFrame",
     title: "Enterprise SaaS Platform",
-    desc: "Delivered a cloud-native SaaS platform from concept to production — streamlining collaboration, automating workflows, and scaling without operational overhead.",
+    desc: "Delivered a cloud-native SaaS platform from concept to production — enabling organizations to streamline collaboration, automate workflows, and scale without increasing operational overhead. FirstFrame unifies Outlook calendar, a video library, and an Outlook add-in into an intelligent campaign engine, then delivers content through a custom Microsoft Teams bot for HR interviews, sales calls, and training sessions.",
     stack: "Azure · Docker · Kubernetes · Terraform · GitHub Actions",
+    highlights: [
+      "Production-ready MVP",
+      "Microsoft 365 Integration",
+      "Automated Deployment",
+      "Cloud Scalability",
+    ],
+    image: firstFrameAsset.url,
     featured: true,
   },
   {
     tag: "Corporate Digital Platform",
     name: "Microtechx",
-    title: "Enterprise Website",
-    desc: "Designed and developed a modern digital platform for enterprise services with a focus on performance and brand clarity.",
-    stack: "Next.js · Azure · GitHub Actions",
+    title: "Enterprise Business Website",
+    desc: "Designed and developed the official website for MicroTechx, an enterprise technology company specializing in Cloud, AI, Security, and SAP BTP solutions. Built a responsive, user-centric platform showcasing services, industries, case studies, and business outcomes — with modern UI/UX, intuitive navigation, mobile optimization, and strategic CTAs that drive client engagement.",
+    stack: "Next.js · TypeScript · Azure DevOps · Responsive Design",
+    highlights: [
+      "Responsive UI/UX",
+      "Next.js + TypeScript",
+      "Azure DevOps Pipelines",
+      "SEO & Performance",
+    ],
+    image: microtechxCover,
   },
   {
     tag: "Cloud Architecture Lab",
@@ -369,32 +396,69 @@ function Portfolio() {
             {projects.map((p, i) => (
               <article
                 key={p.name}
-                className={`group relative border border-border rounded-3xl p-8 md:p-10 transition hover:-translate-y-1 ${
+                className={`group relative border border-border rounded-3xl overflow-hidden transition hover:-translate-y-1 ${
                   p.featured ? "bg-primary md:col-span-2" : "bg-surface"
                 }`}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="text-xs uppercase tracking-[0.18em] opacity-70 mb-3">
-                      {p.tag}
-                    </div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-ink">{p.name}</h3>
-                    <p className="text-ink/70 mt-1 font-medium">{p.title}</p>
+                {p.image && (
+                  <div
+                    className={`relative w-full overflow-hidden border-b border-ink/10 ${
+                      p.featured ? "bg-[#0b0a2a]" : "bg-ink/5"
+                    }`}
+                  >
+                    <img
+                      src={p.image}
+                      alt={`${p.name} — ${p.title}`}
+                      loading="lazy"
+                      className={`w-full ${
+                        p.featured
+                          ? "max-h-[520px] object-contain mx-auto"
+                          : "aspect-[16/9] object-cover"
+                      } group-hover:scale-[1.02] transition-transform duration-500`}
+                    />
                   </div>
-                  <span className="text-ink/40 font-mono text-sm">0{i + 1}</span>
-                </div>
-                <p className="mt-6 text-ink/80 max-w-2xl leading-relaxed">{p.desc}</p>
-                <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-                  <span className="text-sm font-mono text-ink/70">{p.stack}</span>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink group-hover:gap-3 transition-all">
-                    View case study <ArrowUpRight className="w-4 h-4" />
-                  </span>
+                )}
+                <div className="p-8 md:p-10">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="text-xs uppercase tracking-[0.18em] opacity-70 mb-3">
+                        {p.tag}
+                      </div>
+                      <h3 className="text-3xl md:text-4xl font-bold text-ink">{p.name}</h3>
+                      <p className="text-ink/70 mt-1 font-medium">{p.title}</p>
+                    </div>
+                    <span className="text-ink/40 font-mono text-sm">0{i + 1}</span>
+                  </div>
+                  <p className="mt-6 text-ink/80 max-w-2xl leading-relaxed">{p.desc}</p>
+                  {p.highlights && (
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {p.highlights.map((h) => (
+                        <span
+                          key={h}
+                          className={`text-xs font-medium px-3 py-1.5 rounded-full border ${
+                            p.featured
+                              ? "bg-ink text-background border-ink"
+                              : "bg-background text-ink border-border"
+                          }`}
+                        >
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+                    <span className="text-sm font-mono text-ink/70">{p.stack}</span>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink group-hover:gap-3 transition-all">
+                      View case study <ArrowUpRight className="w-4 h-4" />
+                    </span>
+                  </div>
                 </div>
               </article>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* CONTACT */}
       <section id="contact" className="py-24 md:py-32 bg-ink text-background">
