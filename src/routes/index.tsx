@@ -146,16 +146,10 @@ const projects: Project[] = [
 function Portfolio() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set());
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const toggleProjectDesc = (name: string) => {
-    setExpandedProjects((prev) => {
-      const next = new Set(prev);
-      if (next.has(name)) next.delete(name);
-      else next.add(name);
-      return next;
-    });
-  };
+  const featuredProject = projects.find((p) => p.featured);
+  const otherProjects = projects.filter((p) => !p.featured);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
