@@ -136,8 +136,10 @@ const projects: Project[] = [
     tag: "DevOps Automation",
     name: "CI/CD & Infrastructure Automation",
     title: "Pipeline Toolkit",
-    desc: "Built a fully automated CI/CD workflow using cloud-native technologies to ship reliably, multiple times a day.",
+    desc: "Built a fully automated CI/CD workflow using cloud-native technologies to ship reliably, multiple times a day. Integrated GitHub Actions, Terraform, Docker, and Azure to provision infrastructure, run tests, build container images, and deploy to multiple environments with zero manual steps.",
     stack: "GitHub Actions · Terraform · Azure · Docker",
+    highlights: ["Automated Pipelines", "Infrastructure as Code", "Zero-Downtime Deploys", "Multi-Environment"],
+    image: cicdAsset.url,
   },
 ];
 
