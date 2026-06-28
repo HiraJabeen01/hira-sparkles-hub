@@ -117,11 +117,18 @@ const projects: Project[] = [
     image: microtechxCover,
   },
   {
-    tag: "Cloud Architecture Lab",
-    name: "Distributed Voting Platform",
-    title: "Microservices Reference",
-    desc: "Microservices platform demonstrating scalable infrastructure design, observability, and zero-downtime deployments.",
-    stack: "Kubernetes · Terraform · Docker · Prometheus",
+    tag: "Distributed Voting Application",
+    name: "Voting Platform",
+    title: "Multi-Container Microservices Architecture",
+    desc: "Developed a distributed Voting Application designed to run across multiple Docker containers. The application integrates Python, Node.js, and .NET for backend services, Redis for real-time messaging, and Postgres for persistent storage. Utilized Docker Compose, Docker Swarm, and Kubernetes for container orchestration and deployment, ensuring high availability and scalability across services. The project enables seamless communication between microservices, providing a robust and reliable platform for online voting in real-time.",
+    stack: "Python · Node.js · .NET · Redis · Postgres · Docker · Kubernetes · Docker Swarm",
+    highlights: [
+      "Microservices Architecture",
+      "Container Orchestration",
+      "Real-Time Messaging",
+      "High Availability",
+    ],
+    image: votingArchitectureAsset.url,
   },
   {
     tag: "DevOps Automation",
