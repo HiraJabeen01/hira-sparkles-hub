@@ -421,7 +421,7 @@ function Portfolio() {
                       className={`w-full ${
                         p.featured
                           ? "max-h-[520px] object-contain mx-auto"
-                          : "aspect-[16/9] object-contain"
+                          : "h-auto object-contain"
                       } group-hover:scale-[1.02] transition-transform duration-500`}
                     />
                   </div>
