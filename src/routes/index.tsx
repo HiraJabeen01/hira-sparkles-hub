@@ -227,11 +227,7 @@ function Portfolio() {
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] text-ink">
               An engineer known for turning{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10">complexity</span>
-                <span className="absolute left-0 right-0 bottom-1 h-3 md:h-4 bg-primary -z-0 rounded-sm" />
-              </span>{" "}
-              into clarity.
+              <span className="text-gradient">complexity into clarity.</span>
             </h1>
             <p className="mt-7 text-lg text-muted-foreground max-w-xl leading-relaxed">
               I'm <strong className="text-ink font-semibold">Hira Jabeen</strong> — I help SaaS
