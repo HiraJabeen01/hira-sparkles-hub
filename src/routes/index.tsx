@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import hiraAsset from "@/assets/hira.png.asset.json";
 import firstFrameAsset from "@/assets/firstframe-architecture.png.asset.json";
-import microtechxCover from "@/assets/microtechx-cover.jpg";
+import microtechxCover from "@/assets/microtechx-site.png.asset.json";
 import votingArchitectureAsset from "@/assets/voting-architecture.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -114,7 +114,7 @@ const projects: Project[] = [
       "Azure DevOps Pipelines",
       "SEO & Performance",
     ],
-    image: microtechxCover,
+    image: microtechxCover.url,
   },
   {
     tag: "Distributed Voting Application",
