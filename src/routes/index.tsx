@@ -142,6 +142,16 @@ const projects: Project[] = [
 function Portfolio() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set());
+
+  const toggleProjectDesc = (name: string) => {
+    setExpandedProjects((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -431,7 +441,21 @@ function Portfolio() {
                       </div>
                       <span className="text-ink/40 font-mono text-sm">0{i + 1}</span>
                     </div>
-                    <p className="mt-6 text-ink/80 leading-relaxed text-sm md:text-base">{p.desc}</p>
+                    <div className="mt-6 text-ink/80 leading-relaxed text-sm md:text-base">
+                      <p>
+                        {p.desc.length > 160 && !expandedProjects.has(p.name)
+                          ? `${p.desc.slice(0, 160).trim()}...`
+                          : p.desc}
+                      </p>
+                      {p.desc.length > 160 && (
+                        <button
+                          onClick={() => toggleProjectDesc(p.name)}
+                          className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-ink underline underline-offset-4 hover:text-ink/70 transition"
+                        >
+                          {expandedProjects.has(p.name) ? "See less" : "See more"}
+                        </button>
+                      )}
+                    </div>
                     {p.highlights && (
                       <div className="mt-6 flex flex-wrap gap-2">
                         {p.highlights.map((h) => (
@@ -448,12 +472,6 @@ function Portfolio() {
                         ))}
                       </div>
                     )}
-                    <div className="mt-auto pt-8 flex flex-wrap items-center justify-between gap-4">
-                      <span className="text-xs font-mono text-ink/70">{p.stack}</span>
-                      <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink group-hover:gap-3 transition-all">
-                        View case study <ArrowUpRight className="w-4 h-4" />
-                      </span>
-                    </div>
                   </div>
                 </article>
               );
