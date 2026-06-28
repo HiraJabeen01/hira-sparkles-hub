@@ -16,6 +16,7 @@ import {
 import hiraAsset from "@/assets/hira.png.asset.json";
 import firstFrameAsset from "@/assets/firstframe-architecture.png.asset.json";
 import microtechxCover from "@/assets/microtechx-cover.jpg";
+import votingArchitectureAsset from "@/assets/voting-architecture.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
