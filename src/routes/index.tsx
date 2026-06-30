@@ -487,7 +487,7 @@ function Portfolio() {
 
           {/* Project details modal */}
           <Dialog open={!!selectedProject} onOpenChange={(o) => !o && setSelectedProject(null)}>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0 bg-background">
+            <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto p-0 bg-background">
               {selectedProject && (
                 <div className="grid md:grid-cols-2">
                   {selectedProject.image && (
