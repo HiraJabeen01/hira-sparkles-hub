@@ -487,56 +487,58 @@ function Portfolio() {
 
           {/* Project details modal */}
           <Dialog open={!!selectedProject} onOpenChange={(o) => !o && setSelectedProject(null)}>
-            <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-background">
+            <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto p-0 bg-background">
               {selectedProject && (
-                <>
-                  <DialogHeader>
-                    <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">
-                      {selectedProject.tag}
-                    </div>
-                    <DialogTitle className="text-2xl md:text-3xl font-bold text-ink">
-                      {selectedProject.name}
-                    </DialogTitle>
-                    <DialogDescription className="text-ink/70 font-medium">
-                      {selectedProject.title}
-                    </DialogDescription>
-                  </DialogHeader>
+                <div className="grid md:grid-cols-2">
                   {selectedProject.image && (
-                    <div className="relative w-full overflow-hidden rounded-xl bg-[#0b0a2a] border border-border aspect-[16/10]">
+                    <div className="relative w-full overflow-hidden bg-surface aspect-[4/3] md:aspect-auto md:h-full md:min-h-[420px]">
                       <img
                         src={selectedProject.image}
                         alt={`${selectedProject.name} — ${selectedProject.title}`}
-                        className="absolute inset-0 w-full h-full object-contain p-3"
+                        className="absolute inset-0 w-full h-full object-contain p-6"
                       />
                     </div>
                   )}
-                  <p className="text-ink/80 leading-relaxed text-sm md:text-base">
-                    {selectedProject.desc}
-                  </p>
-                  {selectedProject.highlights && (
-                    <div>
-                      <h4 className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">
-                        Highlights
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedProject.highlights.map((h) => (
-                          <span
-                            key={h}
-                            className="text-xs font-medium px-3 py-1.5 rounded-full border bg-background text-ink border-border"
-                          >
-                            {h}
-                          </span>
-                        ))}
+                  <div className="p-6 md:p-8 flex flex-col gap-5">
+                    <DialogHeader>
+                      <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">
+                        {selectedProject.tag}
                       </div>
+                      <DialogTitle className="text-2xl md:text-3xl font-bold text-ink">
+                        {selectedProject.name}
+                      </DialogTitle>
+                      <DialogDescription className="text-ink/70 font-medium">
+                        {selectedProject.title}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <p className="text-ink/80 leading-relaxed text-sm md:text-base">
+                      {selectedProject.desc}
+                    </p>
+                    {selectedProject.highlights && (
+                      <div>
+                        <h4 className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">
+                          Highlights
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedProject.highlights.map((h) => (
+                            <span
+                              key={h}
+                              className="text-xs font-medium px-3 py-1.5 rounded-full border bg-background text-ink border-border"
+                            >
+                              {h}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div>
+                      <h4 className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">
+                        Tech Stack
+                      </h4>
+                      <p className="text-sm text-ink/80 font-mono">{selectedProject.stack}</p>
                     </div>
-                  )}
-                  <div>
-                    <h4 className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">
-                      Tech Stack
-                    </h4>
-                    <p className="text-sm text-ink/80 font-mono">{selectedProject.stack}</p>
                   </div>
-                </>
+                </div>
               )}
             </DialogContent>
           </Dialog>
