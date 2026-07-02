@@ -153,9 +153,43 @@ function Portfolio() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [booking, setBooking] = useState({
+    name: "",
+    email: "",
+    company: "",
+    project: "",
+    availability: "",
+  });
+  const [bookingSent, setBookingSent] = useState(false);
 
   const featuredProject = projects.find((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
+
+  const openBooking = () => {
+    setBookingSent(false);
+    setBookingOpen(true);
+  };
+
+  const handleBookingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = `Discovery call request — ${booking.name}${booking.company ? ` (${booking.company})` : ""}`;
+    const body = [
+      `Name: ${booking.name}`,
+      `Email: ${booking.email}`,
+      `Company: ${booking.company || "—"}`,
+      "",
+      "Project / goals:",
+      booking.project || "—",
+      "",
+      "Availability (preferred times & timezone):",
+      booking.availability || "—",
+    ].join("\n");
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+    setBookingSent(true);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
