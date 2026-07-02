@@ -595,13 +595,23 @@ function Portfolio() {
             Whether you're launching a SaaS product, modernizing cloud infrastructure, or improving
             deployment reliability — I'd love to hear about your goals.
           </p>
-          <a
-            href={`mailto:${EMAIL}`}
-            className="mt-10 inline-flex items-center gap-3 rounded-full bg-primary text-primary-foreground px-7 py-4 text-base font-semibold hover:opacity-90 transition"
-          >
-            <Mail className="w-5 h-5" />
-            {EMAIL}
-          </a>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={openBooking}
+              className="inline-flex items-center gap-3 rounded-full bg-primary text-primary-foreground px-7 py-4 text-base font-semibold hover:opacity-90 transition"
+            >
+              <ArrowUpRight className="w-5 h-5" />
+              Book a Discovery Call
+            </button>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="inline-flex items-center gap-3 rounded-full border border-background/30 px-7 py-4 text-base font-semibold hover:bg-background/10 transition"
+            >
+              <Mail className="w-5 h-5" />
+              {EMAIL}
+            </a>
+          </div>
           <div className="mt-12 flex items-center justify-center gap-4">
             {[
               { href: `mailto:${EMAIL}`, icon: Mail, label: "Email" },
