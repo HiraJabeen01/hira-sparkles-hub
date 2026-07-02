@@ -6,10 +6,18 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// GitHub Pages serves this project under https://hirajabeen01.github.io/hira-sparkles-hub/
+// so all built asset URLs must be prefixed with the repo name in production.
+// Locally (dev / Lovable preview) we keep the base at "/".
+const isGithubPages = process.env.DEPLOY_TARGET === "github-pages";
+
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+  },
+  vite: {
+    base: isGithubPages ? "/hira-sparkles-hub/" : "/",
   },
 });
