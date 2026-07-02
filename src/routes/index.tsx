@@ -283,12 +283,13 @@ function Portfolio() {
               build reliable systems that support growth instead of slowing it down.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#contact"
+              <button
+                type="button"
+                onClick={openBooking}
                 className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition"
               >
                 Book a Discovery Call <ArrowUpRight className="w-4 h-4" />
-              </a>
+              </button>
               <a
                 href="#projects"
                 className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-medium hover:bg-muted transition"
