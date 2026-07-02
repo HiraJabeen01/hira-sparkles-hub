@@ -153,9 +153,43 @@ function Portfolio() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [booking, setBooking] = useState({
+    name: "",
+    email: "",
+    company: "",
+    project: "",
+    availability: "",
+  });
+  const [bookingSent, setBookingSent] = useState(false);
 
   const featuredProject = projects.find((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
+
+  const openBooking = () => {
+    setBookingSent(false);
+    setBookingOpen(true);
+  };
+
+  const handleBookingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = `Discovery call request — ${booking.name}${booking.company ? ` (${booking.company})` : ""}`;
+    const body = [
+      `Name: ${booking.name}`,
+      `Email: ${booking.email}`,
+      `Company: ${booking.company || "—"}`,
+      "",
+      "Project / goals:",
+      booking.project || "—",
+      "",
+      "Availability (preferred times & timezone):",
+      booking.availability || "—",
+    ].join("\n");
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+    setBookingSent(true);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -249,12 +283,13 @@ function Portfolio() {
               build reliable systems that support growth instead of slowing it down.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#contact"
+              <button
+                type="button"
+                onClick={openBooking}
                 className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition"
               >
                 Book a Discovery Call <ArrowUpRight className="w-4 h-4" />
-              </a>
+              </button>
               <a
                 href="#projects"
                 className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-medium hover:bg-muted transition"
@@ -560,13 +595,23 @@ function Portfolio() {
             Whether you're launching a SaaS product, modernizing cloud infrastructure, or improving
             deployment reliability — I'd love to hear about your goals.
           </p>
-          <a
-            href={`mailto:${EMAIL}`}
-            className="mt-10 inline-flex items-center gap-3 rounded-full bg-primary text-primary-foreground px-7 py-4 text-base font-semibold hover:opacity-90 transition"
-          >
-            <Mail className="w-5 h-5" />
-            {EMAIL}
-          </a>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={openBooking}
+              className="inline-flex items-center gap-3 rounded-full bg-primary text-primary-foreground px-7 py-4 text-base font-semibold hover:opacity-90 transition"
+            >
+              <ArrowUpRight className="w-5 h-5" />
+              Book a Discovery Call
+            </button>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="inline-flex items-center gap-3 rounded-full border border-background/30 px-7 py-4 text-base font-semibold hover:bg-background/10 transition"
+            >
+              <Mail className="w-5 h-5" />
+              {EMAIL}
+            </a>
+          </div>
           <div className="mt-12 flex items-center justify-center gap-4">
             {[
               { href: `mailto:${EMAIL}`, icon: Mail, label: "Email" },
@@ -596,6 +641,101 @@ function Portfolio() {
           <div className="font-display italic">Built with care — turning complexity into clarity.</div>
         </div>
       </footer>
+
+      {/* BOOKING DIALOG */}
+      <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl">Book a Discovery Call</DialogTitle>
+            <DialogDescription>
+              Share a few details and I'll reply within 24 hours with available times.
+            </DialogDescription>
+          </DialogHeader>
+          {bookingSent ? (
+            <div className="py-6 text-center space-y-3">
+              <div className="text-lg font-semibold">Your email draft is ready ✉️</div>
+              <p className="text-sm text-muted-foreground">
+                If your mail app didn't open, email me directly at{" "}
+                <a href={`mailto:${EMAIL}`} className="underline">{EMAIL}</a>.
+              </p>
+              <button
+                type="button"
+                onClick={() => setBookingOpen(false)}
+                className="mt-4 rounded-full bg-ink text-background px-6 py-2 text-sm font-medium"
+              >
+                Close
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleBookingSubmit} className="space-y-4 mt-2">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <label className="text-sm font-medium space-y-1 block">
+                  Name
+                  <input
+                    required
+                    maxLength={100}
+                    value={booking.name}
+                    onChange={(e) => setBooking({ ...booking, name: e.target.value })}
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </label>
+                <label className="text-sm font-medium space-y-1 block">
+                  Email
+                  <input
+                    required
+                    type="email"
+                    maxLength={255}
+                    value={booking.email}
+                    onChange={(e) => setBooking({ ...booking, email: e.target.value })}
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </label>
+              </div>
+              <label className="text-sm font-medium space-y-1 block">
+                Company (optional)
+                <input
+                  maxLength={100}
+                  value={booking.company}
+                  onChange={(e) => setBooking({ ...booking, company: e.target.value })}
+                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </label>
+              <label className="text-sm font-medium space-y-1 block">
+                What are you building?
+                <textarea
+                  required
+                  rows={3}
+                  maxLength={1000}
+                  value={booking.project}
+                  onChange={(e) => setBooking({ ...booking, project: e.target.value })}
+                  placeholder="A short description of the project or the problem you're solving."
+                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </label>
+              <label className="text-sm font-medium space-y-1 block">
+                Preferred times & timezone
+                <textarea
+                  rows={2}
+                  maxLength={500}
+                  value={booking.availability}
+                  onChange={(e) => setBooking({ ...booking, availability: e.target.value })}
+                  placeholder="e.g. Weekdays 3–6pm PKT, or share 2–3 options."
+                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </label>
+              <button
+                type="submit"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-3 text-sm font-semibold hover:opacity-90 transition"
+              >
+                Send Request <ArrowUpRight className="w-4 h-4" />
+              </button>
+              <p className="text-xs text-muted-foreground text-center">
+                This opens your email app with the details pre-filled — just hit send.
+              </p>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
