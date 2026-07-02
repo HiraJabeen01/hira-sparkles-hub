@@ -641,6 +641,101 @@ function Portfolio() {
           <div className="font-display italic">Built with care — turning complexity into clarity.</div>
         </div>
       </footer>
+
+      {/* BOOKING DIALOG */}
+      <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl">Book a Discovery Call</DialogTitle>
+            <DialogDescription>
+              Share a few details and I'll reply within 24 hours with available times.
+            </DialogDescription>
+          </DialogHeader>
+          {bookingSent ? (
+            <div className="py-6 text-center space-y-3">
+              <div className="text-lg font-semibold">Your email draft is ready ✉️</div>
+              <p className="text-sm text-muted-foreground">
+                If your mail app didn't open, email me directly at{" "}
+                <a href={`mailto:${EMAIL}`} className="underline">{EMAIL}</a>.
+              </p>
+              <button
+                type="button"
+                onClick={() => setBookingOpen(false)}
+                className="mt-4 rounded-full bg-ink text-background px-6 py-2 text-sm font-medium"
+              >
+                Close
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleBookingSubmit} className="space-y-4 mt-2">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <label className="text-sm font-medium space-y-1 block">
+                  Name
+                  <input
+                    required
+                    maxLength={100}
+                    value={booking.name}
+                    onChange={(e) => setBooking({ ...booking, name: e.target.value })}
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </label>
+                <label className="text-sm font-medium space-y-1 block">
+                  Email
+                  <input
+                    required
+                    type="email"
+                    maxLength={255}
+                    value={booking.email}
+                    onChange={(e) => setBooking({ ...booking, email: e.target.value })}
+                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </label>
+              </div>
+              <label className="text-sm font-medium space-y-1 block">
+                Company (optional)
+                <input
+                  maxLength={100}
+                  value={booking.company}
+                  onChange={(e) => setBooking({ ...booking, company: e.target.value })}
+                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </label>
+              <label className="text-sm font-medium space-y-1 block">
+                What are you building?
+                <textarea
+                  required
+                  rows={3}
+                  maxLength={1000}
+                  value={booking.project}
+                  onChange={(e) => setBooking({ ...booking, project: e.target.value })}
+                  placeholder="A short description of the project or the problem you're solving."
+                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </label>
+              <label className="text-sm font-medium space-y-1 block">
+                Preferred times & timezone
+                <textarea
+                  rows={2}
+                  maxLength={500}
+                  value={booking.availability}
+                  onChange={(e) => setBooking({ ...booking, availability: e.target.value })}
+                  placeholder="e.g. Weekdays 3–6pm PKT, or share 2–3 options."
+                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </label>
+              <button
+                type="submit"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-3 text-sm font-semibold hover:opacity-90 transition"
+              >
+                Send Request <ArrowUpRight className="w-4 h-4" />
+              </button>
+              <p className="text-xs text-muted-foreground text-center">
+                This opens your email app with the details pre-filled — just hit send.
+              </p>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
