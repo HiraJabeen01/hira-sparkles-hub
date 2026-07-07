@@ -2,8 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 permissions:
   contents: read
@@ -23,12 +22,14 @@ jobs:
 
       - run: bun install
 
-      - run: bun run build
+      - name: Build
+        run: bun run build
+        env:
+          DEPLOY_TARGET: github-pages
 
-      - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-      - uses: actions/deploy-pages@v4
+      - name: Show output
+        run: |
+          pwd
+          ls -la
+          echo "-------------"
+          find . -maxdepth 4 -type d
