@@ -199,6 +199,7 @@ function Portfolio() {
     a.remove();
     // Fallback: also try top-level navigation
     try { window.top && (window.top.location.href = href); } catch { window.location.href = href; }
+    setMailtoHref(href);
     setBookingSent(true);
   };
 
