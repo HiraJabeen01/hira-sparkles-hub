@@ -2,21 +2,18 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
-concurrency:
-  group: pages
-  cancel-in-progress: true
-
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -24,54 +21,14 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
+      - run: bun install
 
-      - name: Build static site
-        env:
-          DEPLOY_TARGET: github-pages
-        run: bun run build
+      - run: bun run build
 
-      - name: Locate Pages output
-        run: |
-          if [ -d dist ]; then
-            echo "PAGES_OUTPUT=dist" >> "$GITHUB_ENV"
-          elif [ -d .output/public ]; then
-            echo "PAGES_OUTPUT=.output/public" >> "$GITHUB_ENV"
-          else
-            echo "::error::Could not find a static Pages output directory."
-            exit 1
-          fi
+      - uses: actions/configure-pages@v5
 
-      # GitHub Pages uses 404.html for unknown routes. The file is committed in
-      # public/ and copied into normal Vite builds; this fallback keeps the
-      # workflow working if a build output omits it.
-      - name: Add 404 page
-        run: |
-          if [ ! -f "$PAGES_OUTPUT/404.html" ]; then
-            if [ -f "$PAGES_OUTPUT/index.html" ]; then
-              cp "$PAGES_OUTPUT/index.html" "$PAGES_OUTPUT/404.html"
-            else
-              cp public/404.html "$PAGES_OUTPUT/404.html"
-            fi
-          fi
-
-      # Prevents GitHub Pages from running Jekyll on the output,
-      # which would strip files/folders beginning with an underscore.
-      - name: Disable Jekyll
-        run: touch "$PAGES_OUTPUT/.nojekyll"
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.PAGES_OUTPUT }}
+          path: ./dist
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v4
