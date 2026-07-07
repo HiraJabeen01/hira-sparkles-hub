@@ -619,14 +619,14 @@ function Portfolio() {
 
       {/* BOOKING DIALOG */}
       <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
-        <DialogContent className="max-w-3xl p-0 max-h-[90vh] overflow-hidden flex flex-col">
-          <DialogHeader className="px-6 pt-6 pb-2 shrink-0">
-            <DialogTitle className="font-display text-2xl">Book a Discovery Call</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="w-[95vw] sm:w-full max-w-3xl p-0 h-[90vh] sm:h-[85vh] max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader className="px-4 sm:px-6 pt-4 sm:pt-6 pb-2 shrink-0">
+            <DialogTitle className="font-display text-xl sm:text-2xl">Book a Discovery Call</DialogTitle>
+            <DialogDescription className="text-sm">
               Pick a time that works for you. My calendar and Google Meet are connected, so you'll get the meeting link automatically after booking.
             </DialogDescription>
           </DialogHeader>
-          <div className="relative w-full min-w-[320px] h-[55vh] sm:h-[600px]">
+          <div className="relative w-full flex-1 min-h-0">
             {!calendlyLoaded && (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-background z-10">
                 <Loader2 className="w-10 h-10 text-primary animate-spin" />
