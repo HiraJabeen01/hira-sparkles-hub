@@ -616,8 +616,8 @@ function Portfolio() {
 
       {/* BOOKING DIALOG */}
       <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
-        <DialogContent className="max-w-3xl p-0 max-h-[90vh] overflow-y-auto">
-          <DialogHeader className="px-6 pt-6 pb-2">
+        <DialogContent className="max-w-3xl p-0 max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader className="px-6 pt-6 pb-2 shrink-0">
             <DialogTitle className="font-display text-2xl">Book a Discovery Call</DialogTitle>
             <DialogDescription>
               Pick a time that works for you. My calendar and Google Meet are connected, so you'll get the meeting link automatically after booking.
@@ -626,7 +626,7 @@ function Portfolio() {
           <iframe
             src={calendlyEmbedUrl}
             title="Calendly Scheduling Page"
-            className="w-full min-w-[320px] h-[60vh] sm:h-[700px]"
+            className="w-full min-w-[320px] h-[55vh] sm:h-[600px]"
             style={{ border: "none" }}
             loading="lazy"
           />
