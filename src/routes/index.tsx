@@ -12,6 +12,7 @@ import {
   Rocket,
   Menu,
   X,
+  Loader2,
 } from "lucide-react";
 import hiraAsset from "@/assets/hira.png.asset.json";
 import firstFrameAsset from "@/assets/firstframe-architecture.png.asset.json";
