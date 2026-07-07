@@ -162,6 +162,7 @@ function Portfolio() {
     availability: "",
   });
   const [bookingSent, setBookingSent] = useState(false);
+  const [mailtoHref, setMailtoHref] = useState(`mailto:${EMAIL}`);
 
   const featuredProject = projects.find((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
@@ -185,9 +186,20 @@ function Portfolio() {
       "Availability (preferred times & timezone):",
       booking.availability || "—",
     ].join("\n");
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
+    const href = `mailto:${EMAIL}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
+    // Use an anchor click — more reliable than location.href inside iframes/dialogs
+    const a = document.createElement("a");
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    // Fallback: also try top-level navigation
+    try { window.top && (window.top.location.href = href); } catch { window.location.href = href; }
+    setMailtoHref(href);
     setBookingSent(true);
   };
 
@@ -652,19 +664,30 @@ function Portfolio() {
             </DialogDescription>
           </DialogHeader>
           {bookingSent ? (
-            <div className="py-6 text-center space-y-3">
+            <div className="py-6 text-center space-y-4">
               <div className="text-lg font-semibold">Your email draft is ready ✉️</div>
               <p className="text-sm text-muted-foreground">
-                If your mail app didn't open, email me directly at{" "}
+                Click below to open your mail app with the message pre-filled. If nothing happens,
+                email me directly at{" "}
                 <a href={`mailto:${EMAIL}`} className="underline">{EMAIL}</a>.
               </p>
-              <button
-                type="button"
-                onClick={() => setBookingOpen(false)}
-                className="mt-4 rounded-full bg-ink text-background px-6 py-2 text-sm font-medium"
+              <a
+                href={mailtoHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-full bg-primary text-primary-foreground px-6 py-2 text-sm font-medium"
               >
-                Close
-              </button>
+                Open email app
+              </a>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setBookingOpen(false)}
+                  className="mt-2 rounded-full bg-ink text-background px-6 py-2 text-sm font-medium"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleBookingSubmit} className="space-y-4 mt-2">
