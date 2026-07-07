@@ -185,9 +185,19 @@ function Portfolio() {
       "Availability (preferred times & timezone):",
       booking.availability || "—",
     ].join("\n");
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
+    const href = `mailto:${EMAIL}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
+    // Use an anchor click — more reliable than location.href inside iframes/dialogs
+    const a = document.createElement("a");
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    // Fallback: also try top-level navigation
+    try { window.top && (window.top.location.href = href); } catch { window.location.href = href; }
     setBookingSent(true);
   };
 
