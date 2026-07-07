@@ -23,13 +23,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Hira Jabeen — Full-Stack Developer & DevOps Engineer" },
+      { title: "Hira Jabeen | Full-Stack Developer & DevOps Engineer" },
       {
         name: "description",
         content:
           "Portfolio of Hira Jabeen, a full-stack developer and DevOps engineer helping SaaS startups ship faster with reliable cloud infrastructure.",
       },
-      { property: "og:title", content: "Hira Jabeen — Full-Stack Developer & DevOps Engineer" },
+      { property: "og:title", content: "Hira Jabeen | Full-Stack Developer & DevOps Engineer" },
       {
         property: "og:description",
         content:
@@ -93,7 +93,7 @@ const projects: Project[] = [
     tag: "Featured Project",
     name: "FirstFrame",
     title: "Enterprise SaaS Platform",
-    desc: "Delivered a cloud-native SaaS platform from concept to production — enabling organizations to streamline collaboration, automate workflows, and scale without increasing operational overhead. FirstFrame unifies Outlook calendar, a video library, and an Outlook add-in into an intelligent campaign engine, then delivers content through a custom Microsoft Teams bot for HR interviews, sales calls, and training sessions.",
+    desc: "Delivered a cloud-native SaaS platform from concept to production, enabling organizations to streamline collaboration, automate workflows, and scale without increasing operational overhead. FirstFrame unifies Outlook calendar, a video library, and an Outlook add-in into an intelligent campaign engine, then delivers content through a custom Microsoft Teams bot for HR interviews, sales calls, and training sessions.",
     stack: "Azure · Docker · Kubernetes · Terraform · GitHub Actions",
     highlights: [
       "Production-ready MVP",
@@ -108,7 +108,7 @@ const projects: Project[] = [
     tag: "Corporate Digital Platform",
     name: "Microtechx",
     title: "Enterprise Business Website",
-    desc: "Designed and developed the official website for MicroTechx, an enterprise technology company specializing in Cloud, AI, Security, and SAP BTP solutions. Built a responsive, user-centric platform showcasing services, industries, case studies, and business outcomes — with modern UI/UX, intuitive navigation, mobile optimization, and strategic CTAs that drive client engagement.",
+    desc: "Designed and developed the official website for MicroTechx, an enterprise technology company specializing in Cloud, AI, Security, and SAP BTP solutions. Built a responsive, user-centric platform showcasing services, industries, case studies, and business outcomes, with modern UI/UX, intuitive navigation, mobile optimization, and strategic CTAs that drive client engagement.",
     stack: "Next.js · TypeScript · Azure DevOps · Responsive Design",
     highlights: [
       "Responsive UI/UX",
@@ -174,22 +174,22 @@ function Portfolio() {
 
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = `Discovery call request — ${booking.name}${booking.company ? ` (${booking.company})` : ""}`;
+    const subject = `Discovery call request - ${booking.name}${booking.company ? ` (${booking.company})` : ""}`;
     const body = [
       `Name: ${booking.name}`,
       `Email: ${booking.email}`,
-      `Company: ${booking.company || "—"}`,
+      `Company: ${booking.company || "N/A"}`,
       "",
       "Project / goals:",
-      booking.project || "—",
+      booking.project || "N/A",
       "",
       "Availability (preferred times & timezone):",
-      booking.availability || "—",
+      booking.availability || "N/A",
     ].join("\n");
     const href = `mailto:${EMAIL}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
-    // Use an anchor click — more reliable than location.href inside iframes/dialogs
+    // Use an anchor click - more reliable than location.href inside iframes/dialogs
     const a = document.createElement("a");
     a.href = href;
     a.target = "_blank";
@@ -290,7 +290,7 @@ function Portfolio() {
               <span className="text-gradient">complexity into clarity.</span>
             </h1>
             <p className="mt-7 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              I'm <strong className="text-ink font-semibold">Hira Jabeen</strong> — I help SaaS
+              I'm <strong className="text-ink font-semibold">Hira Jabeen</strong>. I help SaaS
               startups and growing tech companies launch products faster, automate delivery, and
               build reliable systems that support growth instead of slowing it down.
             </p>
@@ -457,7 +457,7 @@ function Portfolio() {
               Engineering solutions that create measurable business impact.
             </h2>
           </div>
-          {/* Featured project — full width */}
+          {/* Featured project - full width */}
           {featuredProject && (
             <button
               type="button"
@@ -468,7 +468,7 @@ function Portfolio() {
                 <div className="relative w-full overflow-hidden bg-[#0b0a2a] md:order-2 md:border-l border-ink/10 aspect-[4/3] md:aspect-auto md:h-full">
                   <img
                     src={featuredProject.image}
-                    alt={`${featuredProject.name} — ${featuredProject.title}`}
+                    alt={`${featuredProject.name} - ${featuredProject.title}`}
                     loading="lazy"
                     className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-[1.02] transition-transform duration-500"
                   />
@@ -495,7 +495,7 @@ function Portfolio() {
             </button>
           )}
 
-          {/* Other projects — 3 in a row */}
+          {/* Other projects - 3 in a row */}
           <div className="grid md:grid-cols-3 gap-6">
             {otherProjects.map((p, i) => (
               <button
@@ -508,7 +508,7 @@ function Portfolio() {
                   <div className="relative w-full overflow-hidden bg-white aspect-[4/3] border-b border-ink/10">
                     <img
                       src={p.image}
-                      alt={`${p.name} — ${p.title}`}
+                      alt={`${p.name} - ${p.title}`}
                       loading="lazy"
                       className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-[1.02] transition-transform duration-500"
                     />
@@ -541,7 +541,7 @@ function Portfolio() {
                     <div className="relative w-full overflow-hidden bg-surface aspect-[4/3] md:aspect-auto md:h-full md:min-h-[420px]">
                       <img
                         src={selectedProject.image}
-                        alt={`${selectedProject.name} — ${selectedProject.title}`}
+                        alt={`${selectedProject.name} - ${selectedProject.title}`}
                         className="absolute inset-0 w-full h-full object-contain p-6"
                       />
                     </div>
@@ -605,7 +605,7 @@ function Portfolio() {
           </h2>
           <p className="mt-6 text-lg text-background/70 max-w-2xl mx-auto">
             Whether you're launching a SaaS product, modernizing cloud infrastructure, or improving
-            deployment reliability — I'd love to hear about your goals.
+            deployment reliability. I'd love to hear about your goals.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <button
@@ -626,7 +626,6 @@ function Portfolio() {
           </div>
           <div className="mt-12 flex items-center justify-center gap-4">
             {[
-              { href: `mailto:${EMAIL}`, icon: Mail, label: "Email" },
               { href: LI, icon: Linkedin, label: "LinkedIn" },
               { href: FB, icon: Facebook, label: "Facebook" },
               { href: GH, icon: Github, label: "Portfolio" },
@@ -650,7 +649,7 @@ function Portfolio() {
       <footer className="bg-ink text-background/60 border-t border-background/10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
           <div>© {new Date().getFullYear()} Hira Jabeen. All rights reserved.</div>
-          <div className="font-display italic">Built with care — turning complexity into clarity.</div>
+          <div className="font-display italic">Built with care, turning complexity into clarity.</div>
         </div>
       </footer>
 
@@ -753,7 +752,7 @@ function Portfolio() {
                 Send Request <ArrowUpRight className="w-4 h-4" />
               </button>
               <p className="text-xs text-muted-foreground text-center">
-                This opens your email app with the details pre-filled — just hit send.
+                This opens your email app with the details pre-filled; just hit send.
               </p>
             </form>
           )}
