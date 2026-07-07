@@ -623,10 +623,12 @@ function Portfolio() {
               Pick a time that works for you. My calendar and Google Meet are connected, so you'll get the meeting link automatically after booking.
             </DialogDescription>
           </DialogHeader>
-          <div
-            className="calendly-inline-widget min-w-[320px]"
-            data-url={CALENDLY_URL}
-            style={{ width: "100%", height: "700px" }}
+          <iframe
+            src={calendlyEmbedUrl}
+            title="Calendly Scheduling Page"
+            className="w-full min-w-[320px]"
+            style={{ height: "700px", border: "none" }}
+            loading="lazy"
           />
         </DialogContent>
       </Dialog>
