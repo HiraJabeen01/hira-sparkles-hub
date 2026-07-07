@@ -52,6 +52,7 @@ const EMAIL = "hirajabeenbhatti@gmail.com";
 const FB = "https://www.facebook.com/hirarajput.bhatti.7/";
 const LI = "https://www.linkedin.com/in/hira-jabeen-cloud-engineer/";
 const GH = "https://hirajabeen01.github.io/portfolio/";
+const CALENDLY_URL = "https://calendly.com/hirajabeenbhatti/30min";
 
 const services = [
   {
