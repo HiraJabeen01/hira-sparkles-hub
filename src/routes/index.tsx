@@ -723,25 +723,26 @@ function Portfolio() {
                 />
               </label>
               <label className="text-sm font-medium space-y-1 block">
-                What are you building?
+                Project details
                 <textarea
                   required
                   rows={3}
                   maxLength={1000}
                   value={booking.project}
                   onChange={(e) => setBooking({ ...booking, project: e.target.value })}
-                  placeholder="A short description of the project or the problem you're solving."
+                  placeholder="A brief description of your project or the problem you're solving."
                   className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </label>
               <label className="text-sm font-medium space-y-1 block">
-                Preferred times & timezone
+                Preferred time
                 <textarea
-                  rows={2}
+                  required
+                  rows={3}
                   maxLength={500}
                   value={booking.availability}
                   onChange={(e) => setBooking({ ...booking, availability: e.target.value })}
-                  placeholder="e.g. Weekdays 3–6pm PKT, or share 2–3 options."
+                  placeholder={"Include your timezone and 2-3 preferred slots, e.g.\nTuesday 3:00-5:00 PM (GMT+1) or Thursday 10:00-11:30 AM (PKT)"}
                   className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </label>
