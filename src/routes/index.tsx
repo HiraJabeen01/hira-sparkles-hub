@@ -155,54 +155,23 @@ function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
-  const [booking, setBooking] = useState({
-    name: "",
-    email: "",
-    company: "",
-    project: "",
-    availability: "",
-  });
-  const [bookingSent, setBookingSent] = useState(false);
-  const [mailtoHref, setMailtoHref] = useState(`mailto:${EMAIL}`);
 
   const featuredProject = projects.find((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
 
   const openBooking = () => {
-    setBookingSent(false);
     setBookingOpen(true);
   };
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const subject = `Discovery call request - ${booking.name}${booking.company ? ` (${booking.company})` : ""}`;
-    const body = [
-      `Name: ${booking.name}`,
-      `Email: ${booking.email}`,
-      `Company: ${booking.company || "N/A"}`,
-      "",
-      "Project / goals:",
-      booking.project || "N/A",
-      "",
-      "Availability (preferred times & timezone):",
-      booking.availability || "N/A",
-    ].join("\n");
-    const href = `mailto:${EMAIL}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
-    // Use an anchor click - more reliable than location.href inside iframes/dialogs
-    const a = document.createElement("a");
-    a.href = href;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    // Fallback: also try top-level navigation
-    try { window.top && (window.top.location.href = href); } catch { window.location.href = href; }
-    setMailtoHref(href);
-    setBookingSent(true);
-  };
+  useEffect(() => {
+    if (!bookingOpen) return;
+    if (document.querySelector("script[data-calendly]")) return;
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.dataset.calendly = "true";
+    document.body.appendChild(script);
+  }, [bookingOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
