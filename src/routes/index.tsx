@@ -664,19 +664,30 @@ function Portfolio() {
             </DialogDescription>
           </DialogHeader>
           {bookingSent ? (
-            <div className="py-6 text-center space-y-3">
+            <div className="py-6 text-center space-y-4">
               <div className="text-lg font-semibold">Your email draft is ready ✉️</div>
               <p className="text-sm text-muted-foreground">
-                If your mail app didn't open, email me directly at{" "}
+                Click below to open your mail app with the message pre-filled. If nothing happens,
+                email me directly at{" "}
                 <a href={`mailto:${EMAIL}`} className="underline">{EMAIL}</a>.
               </p>
-              <button
-                type="button"
-                onClick={() => setBookingOpen(false)}
-                className="mt-4 rounded-full bg-ink text-background px-6 py-2 text-sm font-medium"
+              <a
+                href={mailtoHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-full bg-primary text-primary-foreground px-6 py-2 text-sm font-medium"
               >
-                Close
-              </button>
+                Open email app
+              </a>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setBookingOpen(false)}
+                  className="mt-2 rounded-full bg-ink text-background px-6 py-2 text-sm font-medium"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleBookingSubmit} className="space-y-4 mt-2">
