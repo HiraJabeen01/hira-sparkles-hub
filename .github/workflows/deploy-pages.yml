@@ -32,20 +32,39 @@ jobs:
           DEPLOY_TARGET: github-pages
         run: bun run build
 
-      # GitHub Pages needs a 404.html that mirrors index.html so client-side
-      # routes (e.g. /some-page) resolve correctly on refresh / deep links.
-      - name: Add SPA fallback (404.html)
-        run: cp dist/index.html dist/404.html
+      - name: Locate Pages output
+        run: |
+          if [ -d dist ]; then
+            echo "PAGES_OUTPUT=dist" >> "$GITHUB_ENV"
+          elif [ -d .output/public ]; then
+            echo "PAGES_OUTPUT=.output/public" >> "$GITHUB_ENV"
+          else
+            echo "::error::Could not find a static Pages output directory."
+            exit 1
+          fi
+
+      # GitHub Pages uses 404.html for unknown routes. The file is committed in
+      # public/ and copied into normal Vite builds; this fallback keeps the
+      # workflow working if a build output omits it.
+      - name: Add 404 page
+        run: |
+          if [ ! -f "$PAGES_OUTPUT/404.html" ]; then
+            if [ -f "$PAGES_OUTPUT/index.html" ]; then
+              cp "$PAGES_OUTPUT/index.html" "$PAGES_OUTPUT/404.html"
+            else
+              cp public/404.html "$PAGES_OUTPUT/404.html"
+            fi
+          fi
 
       # Prevents GitHub Pages from running Jekyll on the output,
       # which would strip files/folders beginning with an underscore.
       - name: Disable Jekyll
-        run: touch dist/.nojekyll
+        run: touch "$PAGES_OUTPUT/.nojekyll"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: ${{ env.PAGES_OUTPUT }}
 
   deploy:
     needs: build
