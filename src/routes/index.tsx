@@ -179,6 +179,8 @@ function Portfolio() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const calendlyEmbedUrl = `${CALENDLY_URL}?embed_domain=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "localhost")}&embed_type=Inline`;
+
   const navLinks = [
     { href: "#about", label: "About" },
     { href: "#services", label: "Services" },
