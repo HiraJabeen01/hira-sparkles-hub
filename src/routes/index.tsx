@@ -659,7 +659,7 @@ function Portfolio() {
           <DialogHeader>
             <DialogTitle className="font-display text-2xl">Book a Discovery Call</DialogTitle>
             <DialogDescription>
-              Share a few details and I'll reply within 24 hours with available times.
+              Fill in your details and click Send Request. Your email app opens with everything pre-filled and addressed to {EMAIL}. Just hit send and I'll respond within 24 hours with my availability.
             </DialogDescription>
           </DialogHeader>
           {bookingSent ? (
