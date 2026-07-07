@@ -300,7 +300,7 @@ function Portfolio() {
                 onClick={openBooking}
                 className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition"
               >
-                Book a Discovery Call <ArrowUpRight className="w-4 h-4" />
+                Book a Discovery Call
               </button>
               <a
                 href="#projects"
