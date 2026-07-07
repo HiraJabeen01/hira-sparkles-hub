@@ -162,6 +162,7 @@ function Portfolio() {
     availability: "",
   });
   const [bookingSent, setBookingSent] = useState(false);
+  const [mailtoHref, setMailtoHref] = useState(`mailto:${EMAIL}`);
 
   const featuredProject = projects.find((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
