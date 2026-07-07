@@ -616,7 +616,7 @@ function Portfolio() {
 
       {/* BOOKING DIALOG */}
       <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
-        <DialogContent className="max-w-3xl p-0 overflow-hidden">
+        <DialogContent className="max-w-3xl p-0 max-h-[90vh] overflow-y-auto">
           <DialogHeader className="px-6 pt-6 pb-2">
             <DialogTitle className="font-display text-2xl">Book a Discovery Call</DialogTitle>
             <DialogDescription>
@@ -626,8 +626,8 @@ function Portfolio() {
           <iframe
             src={calendlyEmbedUrl}
             title="Calendly Scheduling Page"
-            className="w-full min-w-[320px]"
-            style={{ height: "700px", border: "none" }}
+            className="w-full min-w-[320px] h-[60vh] sm:h-[700px]"
+            style={{ border: "none" }}
             loading="lazy"
           />
         </DialogContent>
