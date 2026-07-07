@@ -12,6 +12,7 @@ import {
   Rocket,
   Menu,
   X,
+  Loader2,
 } from "lucide-react";
 import hiraAsset from "@/assets/hira.png.asset.json";
 import firstFrameAsset from "@/assets/firstframe-architecture.png.asset.json";
@@ -155,12 +156,14 @@ function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
   const featuredProject = projects.find((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
 
   const openBooking = () => {
     setBookingOpen(true);
+    setCalendlyLoaded(false);
   };
 
   useEffect(() => {
@@ -623,13 +626,22 @@ function Portfolio() {
               Pick a time that works for you. My calendar and Google Meet are connected, so you'll get the meeting link automatically after booking.
             </DialogDescription>
           </DialogHeader>
-          <iframe
-            src={calendlyEmbedUrl}
-            title="Calendly Scheduling Page"
-            className="w-full min-w-[320px] h-[55vh] sm:h-[600px]"
-            style={{ border: "none" }}
-            loading="lazy"
-          />
+          <div className="relative w-full min-w-[320px] h-[55vh] sm:h-[600px]">
+            {!calendlyLoaded && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-background z-10">
+                <Loader2 className="w-10 h-10 text-primary animate-spin" />
+                <p className="text-sm text-muted-foreground">Loading calendar…</p>
+              </div>
+            )}
+            <iframe
+              src={calendlyEmbedUrl}
+              title="Calendly Scheduling Page"
+              className="w-full h-full"
+              style={{ border: "none" }}
+              loading="lazy"
+              onLoad={() => setCalendlyLoaded(true)}
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </div>
