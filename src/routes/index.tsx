@@ -52,6 +52,7 @@ const EMAIL = "hirajabeenbhatti@gmail.com";
 const FB = "https://www.facebook.com/hirarajput.bhatti.7/";
 const LI = "https://www.linkedin.com/in/hira-jabeen-cloud-engineer/";
 const GH = "https://hirajabeen01.github.io/portfolio/";
+const CALENDLY_URL = "https://calendly.com/hirajabeenbhatti/30min";
 
 const services = [
   {
@@ -154,53 +155,12 @@ function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
-  const [booking, setBooking] = useState({
-    name: "",
-    email: "",
-    company: "",
-    project: "",
-    availability: "",
-  });
-  const [bookingSent, setBookingSent] = useState(false);
-  const [mailtoHref, setMailtoHref] = useState(`mailto:${EMAIL}`);
 
   const featuredProject = projects.find((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
 
   const openBooking = () => {
-    setBookingSent(false);
     setBookingOpen(true);
-  };
-
-  const handleBookingSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const subject = `Discovery call request - ${booking.name}${booking.company ? ` (${booking.company})` : ""}`;
-    const body = [
-      `Name: ${booking.name}`,
-      `Email: ${booking.email}`,
-      `Company: ${booking.company || "N/A"}`,
-      "",
-      "Project / goals:",
-      booking.project || "N/A",
-      "",
-      "Availability (preferred times & timezone):",
-      booking.availability || "N/A",
-    ].join("\n");
-    const href = `mailto:${EMAIL}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
-    // Use an anchor click - more reliable than location.href inside iframes/dialogs
-    const a = document.createElement("a");
-    a.href = href;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    // Fallback: also try top-level navigation
-    try { window.top && (window.top.location.href = href); } catch { window.location.href = href; }
-    setMailtoHref(href);
-    setBookingSent(true);
   };
 
   useEffect(() => {
@@ -208,6 +168,8 @@ function Portfolio() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const calendlyEmbedUrl = `${CALENDLY_URL}?embed_domain=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "localhost")}&embed_type=Inline`;
 
   const navLinks = [
     { href: "#about", label: "About" },
@@ -613,7 +575,6 @@ function Portfolio() {
               onClick={openBooking}
               className="inline-flex items-center gap-3 rounded-full bg-primary text-primary-foreground px-7 py-4 text-base font-semibold hover:opacity-90 transition"
             >
-              <ArrowUpRight className="w-5 h-5" />
               Book a Discovery Call
             </button>
             <a
@@ -655,108 +616,20 @@ function Portfolio() {
 
       {/* BOOKING DIALOG */}
       <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
+        <DialogContent className="max-w-3xl p-0 max-h-[90vh] overflow-y-auto">
+          <DialogHeader className="px-6 pt-6 pb-2">
             <DialogTitle className="font-display text-2xl">Book a Discovery Call</DialogTitle>
             <DialogDescription>
-              Fill in your details and click Send Request. Your email app opens with everything pre-filled and addressed to {EMAIL}. Just hit send and I'll respond within 24 hours with my availability.
+              Pick a time that works for you. My calendar and Google Meet are connected, so you'll get the meeting link automatically after booking.
             </DialogDescription>
           </DialogHeader>
-          {bookingSent ? (
-            <div className="py-6 text-center space-y-4">
-              <div className="text-lg font-semibold">Your email draft is ready ✉️</div>
-              <p className="text-sm text-muted-foreground">
-                Click below to open your mail app with the message pre-filled. If nothing happens,
-                email me directly at{" "}
-                <a href={`mailto:${EMAIL}`} className="underline">{EMAIL}</a>.
-              </p>
-              <a
-                href={mailtoHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block rounded-full bg-primary text-primary-foreground px-6 py-2 text-sm font-medium"
-              >
-                Open email app
-              </a>
-              <div>
-                <button
-                  type="button"
-                  onClick={() => setBookingOpen(false)}
-                  className="mt-2 rounded-full bg-ink text-background px-6 py-2 text-sm font-medium"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={handleBookingSubmit} className="space-y-4 mt-2">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <label className="text-sm font-medium space-y-1 block">
-                  Name
-                  <input
-                    required
-                    maxLength={100}
-                    value={booking.name}
-                    onChange={(e) => setBooking({ ...booking, name: e.target.value })}
-                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </label>
-                <label className="text-sm font-medium space-y-1 block">
-                  Email
-                  <input
-                    required
-                    type="email"
-                    maxLength={255}
-                    value={booking.email}
-                    onChange={(e) => setBooking({ ...booking, email: e.target.value })}
-                    className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </label>
-              </div>
-              <label className="text-sm font-medium space-y-1 block">
-                Company (optional)
-                <input
-                  maxLength={100}
-                  value={booking.company}
-                  onChange={(e) => setBooking({ ...booking, company: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-              </label>
-              <label className="text-sm font-medium space-y-1 block">
-                Project details
-                <textarea
-                  required
-                  rows={3}
-                  maxLength={1000}
-                  value={booking.project}
-                  onChange={(e) => setBooking({ ...booking, project: e.target.value })}
-                  placeholder="A brief description of your project or the problem you're solving."
-                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-              </label>
-              <label className="text-sm font-medium space-y-1 block">
-                Preferred time
-                <textarea
-                  required
-                  rows={3}
-                  maxLength={500}
-                  value={booking.availability}
-                  onChange={(e) => setBooking({ ...booking, availability: e.target.value })}
-                  placeholder={"Include your timezone and 2-3 preferred slots, e.g.\nTuesday 3:00-5:00 PM (GMT+1) or Thursday 10:00-11:30 AM (PKT)"}
-                  className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-              </label>
-              <button
-                type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-3 text-sm font-semibold hover:opacity-90 transition"
-              >
-                Send Request <ArrowUpRight className="w-4 h-4" />
-              </button>
-              <p className="text-xs text-muted-foreground text-center">
-                This opens your email app with the details pre-filled; just hit send.
-              </p>
-            </form>
-          )}
+          <iframe
+            src={calendlyEmbedUrl}
+            title="Calendly Scheduling Page"
+            className="w-full min-w-[320px] h-[60vh] sm:h-[700px]"
+            style={{ border: "none" }}
+            loading="lazy"
+          />
         </DialogContent>
       </Dialog>
     </div>
