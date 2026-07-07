@@ -164,16 +164,6 @@ function Portfolio() {
   };
 
   useEffect(() => {
-    if (!bookingOpen) return;
-    if (document.querySelector("script[data-calendly]")) return;
-    const script = document.createElement("script");
-    script.src = "https://assets.calendly.com/assets/external/widget.js";
-    script.async = true;
-    script.dataset.calendly = "true";
-    document.body.appendChild(script);
-  }, [bookingOpen]);
-
-  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
