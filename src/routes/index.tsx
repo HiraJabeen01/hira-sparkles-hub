@@ -156,12 +156,14 @@ function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
   const featuredProject = projects.find((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
 
   const openBooking = () => {
     setBookingOpen(true);
+    setCalendlyLoaded(false);
   };
 
   useEffect(() => {
